@@ -13,6 +13,55 @@ class Node:
  
 
 #incomplete 
+class LinkedList:
+    def __init__(self):
+        self.head = None  
+        self.hash = {}
+        self.length = 0
+        
+
+    def insert(self, position, data):
+
+        new_node = Node(data)
+
+        if not self.head:  
+            self.head = new_node
+            self.hash[0] = new_node
+            self.length += 1
+            return
+
+        if position > self.length: 
+
+            print("Error out of bounds") 
+
+            return None 
+
+
+        if self.hash[position-1]:
+            prev_node = self.hash[position - 1]
+            new_node.next = prev_node.next
+            prev_node.next = new_node
+            self.length += 1
+
+
+            for i in range(self.length - 1, position, -1):
+                self.hash[i] = self.hash[i - 1]
+            self.hash[position] = new_node
+            return
+            
+
+
+
+    def display(self):
+        """Display all the elements in the linked list."""
+        if not self.head:
+            print("The list is empty.")
+            return
+        current = self.head
+        while current:
+            print(current.data, end=" -> ")
+            current = current.next
+        print("None")
 
 def insert(head, linkedList, position, data): 
 
@@ -106,19 +155,33 @@ def main():
 
 # Creates linked list with 20 elements 
 
-    linkedList = {} 
+    linkedlist = LinkedList()
 
-    head = Node(0) 
+    # linked list initialisation
+    linkedlist.insert(0, 111)
+    linkedlist.insert(1, 123)
+    for i in range(2, 10):
+        linkedlist.insert(i, i*2)
 
-    for i in range(20): 
+    linkedlist.insert(4, 69) # test insertion in the middle
 
-        linkedList[i] = insert_at_end(head, i * 2) 
+    linkedlist.insert(50, 888) # out of bounds insertion
 
- 
+    linkedlist.display()
+    print(linkedlist.hash)
 
-    insert(head, linkedList, 21, 1) 
+    # linkedList = {} 
+
+    # head = Node(0) 
+
+    # for i in range(20): 
+
+    #     linkedList[i] = insert_at_end(head, i * 2) 
+
+    # insert(head, linkedList, 21, 1) 
 
 # print(get(linkedList, 21).data) 
+
 
     return 0 
 
